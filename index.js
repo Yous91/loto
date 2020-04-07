@@ -1,4 +1,8 @@
-const message = document.getElementById("message")
+let form  = document.getElementsByTagName('form')[0];
+let winningNumbers = [1,2,3,4,5,6];
+let errorMessages = [];
+const message = document.getElementById("message");
+
 
 function validateEmail(resource) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -10,69 +14,81 @@ function validate() {
     let lastName = document.getElementById('last-name').value
     let email = document.getElementById('email').value
     if(firstName == "") {
-        message.innerHTML = 
-        "Please enter your first name.";
+        errorMessages.push("Please enter your first name.");
         return false;
       }
     if(lastName == "") {
-        message.innerHTML = 
-            "Please enter your last name.";
+        errorMessages.push("Please enter your last name.");
         return false;
     }
     if(email == "") {
-        message.innerHTML = 
-            "Please enter your email.";
+        errorMessages.push("Please enter your email.");
         return false;
     }
     if(!validateEmail(email)) {
-        message.innerHTML = 
-            "Please enter a valid email.";
+        errorMessages.push("Please enter a valid email.");
         return false;
     }
-
 }
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min +1)) + min;
-  }
+}
   
 function getArrayOfSixRandomNumbers() {
-    winningNumbers = []
+    winningNumbers = [];
     for (var i = 0; i < 6; i++){
-        winningNumbers.push(getRandomIntInclusive(0, 9));
+        winningNumbers.push(getRandomIntInclusive(1, 49));
     }
 }
 
-function checkIfGoodNumbers(numbers, winningNums) {
-    const number1 = document.getElementById('number1').value
-    const number2 = document.getElementById('number2').value
-    const number3 = document.getElementById('number3').value
-    const number4 = document.getElementById('number4').value
-    const number5 = document.getElementById('number5').value
-    const number6 = document.getElementById('number6').value
-    numbers = [Number(number1), Number(number2), Number(number3), Number(number4), Number(number5), Number(number6)].sort();
-    if (numbers.length !== winningNums.length){
-        message.innerHTML = 
-        "Six numbers must be entered";
-    return false;
-    }
-    else {
-    for (var i = 0; i < numbers.length; i++) {
-        if (numbers[i] != winningNums[i]){
-            message.innerHTML = 
-            "Sorry you lost";
+function checkIfGoodNumbers(winningNums) {
+    let num1 = document.getElementById('number1').value
+    let num2 = document.getElementById('number2').value
+    let num3 = document.getElementById('number3').value
+    let num4 = document.getElementById('number4').value
+    let num5 = document.getElementById('number5').value
+    let num6 = document.getElementById('number6').value
+    let numbers = [Number(num1), Number(num2), Number(num3), Number(num4), Number(num5), Number(num6)].sort();
+    console.log(numbers)
+    for (var i = 0; i < 6; i++){
+        if (numbers[i] == 0){
+            errorMessages.push("Six numbers must be entered");
         return false;
         }
+        else {
+        for (var i = 0; i < numbers.length; i++) {
+            if (numbers[i] != winningNums[i]){
+                message.innerHTML = 
+                "Sorry you lost";
+            return false;
+            }
+        }
+        message.innerHTML = 
+            "Congratulation, you win 1 million dollars !!!!!";
+        return true;
     }
-    message.innerHTML = 
-        "Congratulation, you win 1 million dollars !!!!!";
-    return true;
   }
 }
 
-const checkLoto = () => {
-    validate()
-    checkIfGoodNumbers()
+function errors(errorMsgs) {
+    errorMsgs.forEach(errorMessage => {
+        message.innerHTML = errorMessage
+    });
 }
+
+function checkLoto() {
+    window.addEventListener("DOMContentLoaded", () => {
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            message.innerHTML = ""
+            validate()
+            errors(errorMessages)
+            checkIfGoodNumbers(winningNumbers)
+        })
+    })
+}
+
+checkLoto()
