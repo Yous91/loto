@@ -44,6 +44,8 @@ function getArrayOfSixRandomNumbers() {
     }
 }
 
+getArrayOfSixRandomNumbers()
+
 function checkIfGoodNumbers(winningNums) {
     let num1 = document.getElementById('number1').value
     let num2 = document.getElementById('number2').value
@@ -52,6 +54,7 @@ function checkIfGoodNumbers(winningNums) {
     let num5 = document.getElementById('number5').value
     let num6 = document.getElementById('number6').value
     let numbers = [Number(num1), Number(num2), Number(num3), Number(num4), Number(num5), Number(num6)].sort();
+    winningNums.sort()
     for (var i = 0; i < 6; i++){
         if (numbers[i] == 0){
             errorMessages.push("Six numbers must be entered");
@@ -83,7 +86,6 @@ function checkLoto() {
         form.addEventListener('submit', e => {
             e.preventDefault()
             message.innerHTML = ""
-            getArrayOfSixRandomNumbers()
             validate()
             errors(errorMessages)
             checkIfGoodNumbers(winningNumbers)
