@@ -1,5 +1,5 @@
 let form  = document.getElementsByTagName('form')[0];
-let winningNumbers = [1,2,3,4,5,6];
+let winningNumbers = [];
 let errorMessages = [];
 const message = document.getElementById("message");
 
@@ -62,7 +62,7 @@ function checkIfGoodNumbers(winningNums) {
         for (var i = 0; i < numbers.length; i++) {
             if (numbers[i] != winningNums[i]){
                 message.innerHTML = 
-                "Sorry you lost";
+                "Sorry you lost, the winning number are : " + String(winningNums);
             return false;
             }
         }
@@ -84,6 +84,7 @@ function checkLoto() {
         form.addEventListener('submit', e => {
             e.preventDefault()
             message.innerHTML = ""
+            getArrayOfSixRandomNumbers()
             validate()
             errors(errorMessages)
             checkIfGoodNumbers(winningNumbers)
