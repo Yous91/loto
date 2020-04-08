@@ -52,7 +52,6 @@ function checkIfGoodNumbers(winningNums) {
     let num5 = document.getElementById('number5').value
     let num6 = document.getElementById('number6').value
     let numbers = [Number(num1), Number(num2), Number(num3), Number(num4), Number(num5), Number(num6)].sort();
-    console.log(numbers)
     for (var i = 0; i < 6; i++){
         if (numbers[i] == 0){
             errorMessages.push("Six numbers must be entered");
